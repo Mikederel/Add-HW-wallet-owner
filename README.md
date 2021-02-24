@@ -125,8 +125,10 @@ echo Number of UTXOs: ${txcnt}
 {% endtab %}
 {% endtabs %}
 
-Block Producer: Build raw transaction.
+Build raw transaction.
 
+{% tabs %}
+{% tab title="Block Producer" %}
 ```text
 cardano-cli transaction build-raw \
     ${tx_in} \
@@ -134,14 +136,29 @@ cardano-cli transaction build-raw \
     --invalid-hereafter $(( ${currentSlot} + 10000)) \
     --fee 0 \
     --certificate-file pool.cert \
-    --certificate-file deleg.cert \
     --allegra-era \
     --out-file tx.tmp
 ```
+{% endtab %}
+{% endtabs %}
 
-cardano-cli transaction build-raw  ${tx\_in}  --tx-out $\(cat payment.addr\)+${total\_balance}  --invalid-hereafter $\(\( ${currentSlot} + 10000\)\)  --fee 0  --certificate-file pool.cert  --allegra-era  --out-file tx.tmp
+Calculate transaction fee
 
-Block Producer: Calculate transaction fee
+{% tabs %}
+{% tab title="Block Producer" %}
+```text
+fee=$(cardano-cli transaction calculate-min-fee \
+    --tx-body-file tx.tmp \
+    --tx-in-count ${txcnt} \
+    --tx-out-count 1 \
+    --mainnet \
+    --witness-count 4 \
+    --byron-witness-count 0 \
+    --protocol-params-file params.json | awk '{ print $1 }')
+echo fee: $fee
+```
+{% endtab %}
+{% endtabs %}
 
 fee=$\(cardano-cli transaction calculate-min-fee  --tx-body-file tx.tmp  --tx-in-count ${txcnt}  --tx-out-count 1  --mainnet  --witness-count 4  --byron-witness-count 0  --protocol-params-file params.json \| awk '{ print $1 }'\) echo fee: $fee
 
