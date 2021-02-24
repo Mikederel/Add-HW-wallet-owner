@@ -7,7 +7,11 @@ description: >-
 
 # README
 
-Delegate HW wallet to your pool from either Daedalus or Yoroi.
+Make sure your HW wallet is seen in linux with lsusb command.
+
+If not see: [https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues](https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues)
+
+1. Delegate HW wallet to your pool from either Daedalus or Yoroi.
 
 Air-gapped: Install cardano-hw-cli [https://github.com/vacuumlabs/cardano-hw-cli](https://github.com/vacuumlabs/cardano-hw-cli)
 
@@ -17,14 +21,7 @@ Air-gapped: Install cardano-hw-cli [https://github.com/vacuumlabs/cardano-hw-cli
  Super-powers are granted randomly so please submit an issue if you're not happy with yours.
 {% endhint %}
 
-Once you're strong enough, save the world:
-
-{% code title="hello.sh" %}
-```bash
-# Ain't no code for that yet, sorry
-echo 'You got to trust me on this, I saved the world'
-```
-{% endcode %}
+Once you're strong enough, save
 
 ## Guide: How to build a Cardano Stake Pool
 
