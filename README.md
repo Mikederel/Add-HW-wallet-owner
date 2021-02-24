@@ -125,8 +125,6 @@ echo Number of UTXOs: ${txcnt}
 {% endtab %}
 {% endtabs %}
 
-
-
 Block Producer: Calculate payment.addr balance.
 
 cardano-cli query utxo  --address $\(cat payment.addr\)  --allegra-era  --mainnet &gt; fullUtxo.out
