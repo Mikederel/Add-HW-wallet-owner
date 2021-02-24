@@ -1,4 +1,4 @@
 # Table of contents
 
-* [README](README.md)
+* [Add HW wallet owner for pool pledge](README.md)
 

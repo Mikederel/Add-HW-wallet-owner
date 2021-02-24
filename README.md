@@ -1,33 +1,82 @@
-# README
+---
+description: Here we are adding a HW wallet as second owner so you can pledge from it.
+---
 
-Delegate your HW wallet to your pool from either Daedalus or Yoroi.
+# Add HW wallet owner for pool pledge
 
-Air-gapped: Install cardano-hw-cli [https://github.com/vacuumlabs/cardano-hw-cli](https://github.com/vacuumlabs/cardano-hw-cli) Air-gapped: Export HW wallet public keys.
+Make sure you can see your HW wallet on your air-gapped offline machine.
 
+{% tabs %}
+{% tab title=" Air-gapped offline machine" %}
 ```bash
+lusb
+# If not then visit :
+# https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
+# Linux tab at the bottom.
+```
+{% endtab %}
+{% endtabs %}
+
+Delegate HW wallet to your pool from either Daedalus or Yoroi.
+
+Export your HW wallet public keys.
+
+{% tabs %}
+{% tab title="Air-gapped offline machine" %}
+```bash
+#Install cardano-hw-cli: https://github.com/vacuumlabs/cardano-hw-cli
 cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake.vkey
   --hw-signing-file hw-stake.hwsfile
 ```
+{% endtab %}
+{% endtabs %}
 
-Block Producer: If you're changing your pool metadata json file, remember to calculate the hash of your metadata file and re-upload the updated metadata json file.
+If you are changing your pool metadata json file, remember to calculate the hash of your metadata file and re-upload the updated metadata json file.
 
+{% tabs %}
+{% tab title="Block Producer" %}
 ```bash
 cardano-cli stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
 ```
+{% endtab %}
+{% endtabs %}
 
-Block Producer: Find the minimum pool cost value.
+Find the minimum pool cost value.
 
+{% tabs %}
+{% tab title="Block Producer" %}
 ```bash
-minPoolCost=$(cat $NODE_HOME/params.json | jq -r .minPoolCost) echo minPoolCost: ${minPoolCost}
+minPoolCost=$(cat $NODE_HOME/params.json | jq -r .minPoolCost)
+echo minPoolCost: ${minPoolCost}
 ```
+{% endtab %}
+{% endtabs %}
 
+Create stake-pool registration certificate including HW wallet as second owner and also making it default reward account.
 
+{% hint style="info" %}
+Change this to your own settings!
+{% endhint %}
 
-Air-gapped machine: Create stake-pool registration certificate including HW wallet as second owner and reward account.
-
-cardano-cli stake-pool registration-certificate  --cold-verification-key-file /opt/cardano/cnode/node.vkey  --vrf-verification-key-file /opt/cardano/cnode/vrf.vkey  --pool-pledge 150000000000  --pool-cost 340000000  --pool-margin 0.01  --pool-reward-account-verification-key-file /opt/cardano/cnode/priv/wallet/owner2/stake.vkey  --pool-owner-stake-verification-key-file /opt/cardano/cnode/stake.vkey  --pool-owner-stake-verification-key-file /opt/cardano/cnode/priv/wallet/owner2/stake.vkey  --mainnet  --pool-relay-port 6000  --pool-relay-ipv4 35.203.77.113  --metadata-url [https://raw.githubusercontent.com/Mikederel/c/main/f.json](https://raw.githubusercontent.com/Mikederel/c/main/f.json)  --metadata-hash ddebec9861159c63e9d3a8fa13cad142e2dbd3c960c0bf5d3ff1fbaeb8052954  --out-file pool.cert
+```text
+cardano-cli stake-pool registration-certificate \
+    --cold-verification-key-file node.vkey \
+    --vrf-verification-key-file vrf.vkey \
+    --pool-pledge 150000000000 \ ------your pledge in lovelaces
+    --pool-cost 340000000 \ ------minimum pool cost value found before
+    --pool-margin 0.01 \ ------pool fee in fraction ie 0.01 for 1%
+    --pool-reward-account-verification-key-file hw-stake.vkey \ ------HW wallet key
+    --pool-owner-stake-verification-key-file stake.vkey \ ------previous CLI key
+    --pool-owner-stake-verification-key-file hw-stake.vkey \ ------HW wallet key
+    --mainnet \
+    --pool-relay-port 6000 \ ------your relay port
+    --pool-relay-ipv4 35.203.77.113 \ ------your relay IP
+    --metadata-url <url where you uploaded poolMetaData.json> \
+    --metadata-hash $(cat poolMetaDataHash.txt) \
+    --out-file pool.cert
+```
 
 Copy pool.cert to Block Producer.
 
