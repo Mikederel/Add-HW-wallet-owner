@@ -80,8 +80,6 @@ cardano-cli stake-pool registration-certificate \
 
 Copy pool.cert to Block Producer.
 
-
-
 Find current tip.
 
 {% tabs %}
@@ -160,19 +158,55 @@ echo fee: $fee
 {% endtab %}
 {% endtabs %}
 
-fee=$\(cardano-cli transaction calculate-min-fee  --tx-body-file tx.tmp  --tx-in-count ${txcnt}  --tx-out-count 1  --mainnet  --witness-count 4  --byron-witness-count 0  --protocol-params-file params.json \| awk '{ print $1 }'\) echo fee: $fee
+Calculate final txOut
 
-Block Producer: Calculate final txOut
+{% tabs %}
+{% tab title="Block Producer" %}
+```text
+txOut=$((${total_balance}-${fee}))
+echo txOut: ${txOut}
+```
+{% endtab %}
+{% endtabs %}
 
-txOut=$\(\(${total\_balance}-${fee}\)\) echo txOut: ${txOut}
+Build raw transaction that includes the fee.
 
-Block Producer: cardano-cli transaction build-raw  ${tx\_in}  --tx-out $\(cat payment.addr\)+${txOut}  --invalid-hereafter $\(\( ${currentSlot} + 10000\)\)  --fee ${fee}  --certificate-file pool.cert  --allegra-era  --out-file tx.raw
+```text
+cardano-cli transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat payment.addr)+${txOut} \
+    --invalid-hereafter $(( ${currentSlot} + 10000)) \
+    --fee ${fee} \
+    --certificate-file pool.cert \
+    --allegra-era \
+    --out-file tx.raw
+```
 
 Copy tx.raw to air-gapped machine for signing.
 
-Air-gapped machine: Create transaction witnesses from all used signing-keys.
+Create transaction witnesses from all used CLI signing-keys.
 
-cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file node.skey --mainnet --out-file node-cold.witness cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file stake.skey --mainnet --out-file cli-stake.witness cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file payment.skey --mainnet --out-file cli-payment.witness HW witness creation using cardano-hw-cli: cardano-hw-cli transaction witness --tx-body-file tx.raw --hw-signing-file stake.hwsfile --mainnet --out-file hw-stake.witness
+{% tabs %}
+{% tab title="Air-gapped offline machine" %}
+```text
+cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file node.skey --mainnet --out-file node-cold.witness
+cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file stake.skey --mainnet --out-file cli-stake.witness
+cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file payment.skey --mainnet --out-file cli-payment.witness
+```
+{% endtab %}
+{% endtabs %}
+
+Create transaction witness from HW wallet signing key.\(connect your ledger and open Cardano app\)
+
+{% hint style="info" %}
+Make sure your ledger is detected or its gonna say `"`Transport not availlable `"`
+{% endhint %}
+
+```text
+cardano-hw-cli transaction witness --tx-body-file tx.raw --hw-signing-file hw-stake.hwsfile --mainnet --out-file hw-stake.witness
+```
+
+
 
 Air-gapped machine: Assemble final transaction with all witnesses. cardano-cli transaction assemble --tx-body-file tx.raw --witness-file node-cold.witness --witness-file cli-stake.witness --witness-file cli-payment.witness --witness-file hw-stake.witness --out-file tx-pool.multisign
 
