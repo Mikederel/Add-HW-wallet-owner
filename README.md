@@ -1,4 +1,4 @@
-Delegate your HW wallet to your pool from either Daedalus or Yoroi.
+Delegate HW wallet to your pool from either Daedalus or Yoroi.
 
 Air-gapped: Install cardano-hw-cli https://github.com/vacuumlabs/cardano-hw-cli
 Air-gapped: Export HW wallet public keys.
