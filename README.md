@@ -125,17 +125,19 @@ echo Number of UTXOs: ${txcnt}
 {% endtab %}
 {% endtabs %}
 
-Block Producer: Calculate payment.addr balance.
-
-cardano-cli query utxo  --address $\(cat payment.addr\)  --allegra-era  --mainnet &gt; fullUtxo.out
-
-tail -n +3 fullUtxo.out \| sort -k3 -nr &gt; balance.out
-
-cat balance.out
-
-tx\_in="" total\_balance=0 while read -r utxo; do in\_addr=$\(awk '{ print $1 }' &lt;&lt;&lt; "${utxo}"\) idx=$\(awk '{ print $2 }' &lt;&lt;&lt; "${utxo}"\) utxo\_balance=$\(awk '{ print $3 }' &lt;&lt;&lt; "${utxo}"\) total\_balance=$\(\(${total\_balance}+${utxo\_balance}\)\) echo TxHash: ${in\_addr}\#${idx} echo ADA: ${utxo\_balance} tx\_in="${tx\_in} --tx-in ${in\_addr}\#${idx}" done &lt; balance.out txcnt=$\(cat balance.out \| wc -l\) echo Total ADA balance: ${total\_balance} echo Number of UTXOs: ${txcnt}
-
 Block Producer: Build raw transaction.
+
+```text
+cardano-cli transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat payment.addr)+${total_balance} \
+    --invalid-hereafter $(( ${currentSlot} + 10000)) \
+    --fee 0 \
+    --certificate-file pool.cert \
+    --certificate-file deleg.cert \
+    --allegra-era \
+    --out-file tx.tmp
+```
 
 cardano-cli transaction build-raw  ${tx\_in}  --tx-out $\(cat payment.addr\)+${total\_balance}  --invalid-hereafter $\(\( ${currentSlot} + 10000\)\)  --fee 0  --certificate-file pool.cert  --allegra-era  --out-file tx.tmp
 
