@@ -19,11 +19,11 @@ cardano-cli stake-pool metadata-hash --pool-metadata-file poolMetaData.json > po
 
 Block Producer: Find the minimum pool cost value.
 
-\`\`\`bash
+```bash
+minPoolCost=$(cat $NODE_HOME/params.json | jq -r .minPoolCost) echo minPoolCost: ${minPoolCost}
+```
 
-minPoolCost=$\(cat $NODE\_HOME/params.json \| jq -r .minPoolCost\) echo minPoolCost: ${minPoolCost}
 
-\`\`\`
 
 Air-gapped machine: Create stake-pool registration certificate including HW wallet as second owner and reward account.
 
