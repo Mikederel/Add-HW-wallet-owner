@@ -16,7 +16,7 @@ lusb
 #
 # Trezor Model-T: 
 # https://wiki.trezor.io/Udev_rules
-# and you must install the Trezor Bridge.
+# You must install the Trezor Bridge.
 #
 # OR see Martin's scripts(gitmachtl) for clear indications if you are unsure:
 # https://github.com/gitmachtl/scripts/tree/master/cardano/mainnet#how-to-prepare-your-system-before-using-a-hardware-wallet
@@ -206,7 +206,7 @@ cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file payment
 Create transaction witness from HW wallet signing key.\(connect your ledger and open Cardano app\)
 
 {% hint style="info" %}
-Make sure your ledger is detected or its gonna say `"`Transport not availlable `"`
+Make sure your ledger is detected or its gonna say `"`Transport not available `"`
 {% endhint %}
 
 ```text
