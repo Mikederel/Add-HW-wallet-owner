@@ -3,7 +3,7 @@ Delegate your HW wallet to your pool from either Daedalus or Yoroi.
 Air-gapped: Install cardano-hw-cli https://github.com/vacuumlabs/cardano-hw-cli
 Air-gapped: Export HW wallet public keys.
 
-```text
+```bash
 cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake.vkey
@@ -11,9 +11,9 @@ cardano-hw-cli address key-gen
 ```
 
 Block Producer: If you're changing your pool metadata json file, remember to calculate the hash of your metadata file and re-upload the updated metadata json file.
-
+```bash
 cardano-cli stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
-
+```
 Block Producer: Find the minimum pool cost value.
 
 minPoolCost=$(cat $NODE_HOME/params.json | jq -r .minPoolCost)
