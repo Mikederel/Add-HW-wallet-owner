@@ -3,10 +3,12 @@ Delegate your HW wallet to your pool from either Daedalus or Yoroi.
 Air-gapped: Install cardano-hw-cli https://github.com/vacuumlabs/cardano-hw-cli
 Air-gapped: Export HW wallet public keys.
 
+```text
 cardano-hw-cli address key-gen
   --path 1852H/1815H/0H/2/0
   --verification-key-file hw-stake.vkey
   --hw-signing-file hw-stake.hwsfile
+```
 
 Block Producer: If you're changing your pool metadata json file, remember to calculate the hash of your metadata file and re-upload the updated metadata json file.
 
