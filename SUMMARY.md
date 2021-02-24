@@ -1,4 +1,4 @@
 # Table of contents
 
-* [Add HW wallet owner for pool pledge](README.md)
+* [How to add a HW wallet as owner for pool pledge.](README.md)
 

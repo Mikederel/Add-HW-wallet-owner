@@ -1,8 +1,8 @@
 ---
-description: Here we are adding a HW wallet as second owner so you can pledge from it.
+description: Here we are adding a HW wallet as a second owner so you can pledge from it.
 ---
 
-# Add HW wallet owner for pool pledge
+# How to add a HW wallet as owner for pool pledge.
 
 Make sure you can see your HW wallet on your air-gapped offline machine.
 
