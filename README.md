@@ -72,7 +72,7 @@ cardano-cli stake-pool registration-certificate \
     --pool-owner-stake-verification-key-file hw-stake.vkey \ ------HW wallet key
     --mainnet \
     --pool-relay-port 6000 \ ------your relay port
-    --pool-relay-ipv4 35.203.77.113 \ ------your relay IP
+    --pool-relay-ipv4 IP \ ------your relay IP
     --metadata-url <url where you uploaded poolMetaData.json> \
     --metadata-hash $(cat poolMetaDataHash.txt) \
     --out-file pool.cert
