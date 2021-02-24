@@ -5,21 +5,42 @@ description: >-
   node and 1 relay node.
 ---
 
-# Guide: How to build a Cardano Stake Pool
+# README
 
-## 🎉 ∞ Pre-Announcements
+Delegate HW wallet to your pool from either Daedalus or Yoroi.
+
+Air-gapped: Install cardano-hw-cli [https://github.com/vacuumlabs/cardano-hw-cli](https://github.com/vacuumlabs/cardano-hw-cli)
+
+
 
 {% hint style="info" %}
-Thank you for your support and kind messages! It really energizes us to keep creating the best crypto guides. Use [cointr.ee to find our donation ](https://cointr.ee/coincashew)addresses. 🙏 
+ Super-powers are granted randomly so please submit an issue if you're not happy with yours.
+{% endhint %}
+
+Once you're strong enough, save the world:
+
+{% code title="hello.sh" %}
+```bash
+# Ain't no code for that yet, sorry
+echo 'You got to trust me on this, I saved the world'
+```
+{% endcode %}
+
+## Guide: How to build a Cardano Stake Pool
+
+### 🎉 ∞ Pre-Announcements
+
+{% hint style="info" %}
+Thank you for your support and kind messages! It really energizes us to keep creating the best crypto guides. Use [cointr.ee to find our donation ](https://cointr.ee/coincashew)addresses. 🙏
 {% endhint %}
 
 {% hint style="success" %}
-As of Dec 28 2020, this is **guide version 3.0.0** and written for **cardano mainnet** with **release v.1.24.2** 😁 
+As of Dec 28 2020, this is **guide version 3.0.0** and written for **cardano mainnet** with **release v.1.24.2** 😁
 {% endhint %}
 
-## 🏁 0. Prerequisites
+### 🏁 0. Prerequisites
 
-# Add-HW-wallet-owner
+## Add-HW-wallet-owner
 
 First, update packages and install Ubuntu dependencies.
 
@@ -59,3 +80,4 @@ rm cabal-install-3.2.0.0-x86_64-unknown-linux.tar.xz cabal.sig
 mkdir -p $HOME/.local/bin
 mv cabal $HOME/.local/bin/
 ```
+
