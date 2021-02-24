@@ -206,13 +206,29 @@ Make sure your ledger is detected or its gonna say `"`Transport not availlable `
 cardano-hw-cli transaction witness --tx-body-file tx.raw --hw-signing-file hw-stake.hwsfile --mainnet --out-file hw-stake.witness
 ```
 
+Assemble final transaction with all witnesses.
 
-
-Air-gapped machine: Assemble final transaction with all witnesses. cardano-cli transaction assemble --tx-body-file tx.raw --witness-file node-cold.witness --witness-file cli-stake.witness --witness-file cli-payment.witness --witness-file hw-stake.witness --out-file tx-pool.multisign
+{% tabs %}
+{% tab title="Air-gapped offline machine" %}
+```text
+cardano-cli transaction assemble --tx-body-file tx.raw --witness-file node-cold.witness --witness-file cli-stake.witness --witness-file cli-payment.witness --witness-file hw-stake.witness --out-file tx-pool.multisign
+```
+{% endtab %}
+{% endtabs %}
 
 Copy tx-pool.multisign to your Block Producer.
 
-Block Producer: Submit final transaction. cardano-cli transaction submit --tx-file tx-pool.multisign --mainnet
+Submit final transaction.
 
-Block Producer: Verification on next epoch start. cardano-cli query ledger-state --mainnet --allegra-era --out-file ledger-state.json jq -r '.esLState.\_delegationState.\_pstate.\_pParams."'"$\(cat stakepoolid.txt\)"'" // empty' ledger-state.json
+{% tabs %}
+{% tab title="Block Producer" %}
+```text
+cardano-cli transaction submit --tx-file tx-pool.multisign --mainnet
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+🔥 **Critical : Do not move your funds from CLI pledge wallet before HW wallet delegation is active on your pool!! If you move them before your pledge wont be met!**
+{% endhint %}
 
