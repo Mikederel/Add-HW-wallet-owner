@@ -10,6 +10,7 @@ Make sure you can see your HW wallet on your air-gapped offline machine.
 {% tab title=" Air-gapped offline machine" %}
 ```bash
 lusb
+# Needs Ledger Cardano-App version 2.1.0+
 # If not then visit :
 # Ledger: https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
 # Linux tab at the bottom.
@@ -18,7 +19,7 @@ lusb
 # https://wiki.trezor.io/Udev_rules
 # You must install the Trezor Bridge.
 #
-# OR see Martin's scripts(gitmachtl) for clear indications if you are unsure:
+# OR see "StakePoolOperator Scripts" for clear indications if you are unsure:
 # https://github.com/gitmachtl/scripts/tree/master/cardano/mainnet#how-to-prepare-your-system-before-using-a-hardware-wallet
 ```
 {% endtab %}
