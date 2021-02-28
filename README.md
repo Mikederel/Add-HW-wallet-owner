@@ -2,7 +2,7 @@
 description: Here we are adding a HW wallet as a second owner so you can pledge from it.
 ---
 
-# \[FRCA🍁\] presents: How to add a HW wallet as owner for pool pledge.
+# \[FRCA🍁\] pool guide: How to add a HW wallet as owner for pool pledge.
 
 Make sure you can see your HW wallet on your air-gapped offline machine.
 
