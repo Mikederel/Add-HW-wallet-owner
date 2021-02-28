@@ -215,7 +215,7 @@ cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file payment
 Create transaction witness from HW wallet signing key. \(connect your HW wallet and open Cardano app\)
 
 {% hint style="info" %}
-Make sure your ledger is detected or its gonna say `"`Transport not available `"`
+Make sure your HW wallet is detected or it will say: `"`Transport not available `"`
 {% endhint %}
 
 {% tabs %}
@@ -226,7 +226,7 @@ cardano-hw-cli transaction witness --tx-body-file tx.raw --hw-signing-file hw-st
 {% endtab %}
 {% endtabs %}
 
-Assemble final transaction with all witnesses.
+Assemble final transaction with all the witnesses.
 
 {% tabs %}
 {% tab title="Air-gapped offline machine" %}
@@ -249,6 +249,6 @@ cardano-cli transaction submit --tx-file tx-pool.multisign --mainnet
 {% endtabs %}
 
 {% hint style="info" %}
-🔥 **Critical : Do not move your funds from CLI pledge wallet before HW wallet delegation is active on your pool!!\(**_**after 2 snapshots\)**_  **If you move them before your pledge wont be met!**
+🔥 **Critical : Do not move your funds from CLI pledge wallet before HW wallet delegation is active on your pool!!\(**_**after 2 snapshots\)**_  **If you move them before, your pledge will show as "pledge not met".**
 {% endhint %}
 
