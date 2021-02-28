@@ -2,7 +2,7 @@
 description: Here we are adding a HW wallet as a second owner so you can pledge from it.
 ---
 
-# How to add a HW wallet as owner for pool pledge.
+# \[FRCA🍁\] presents: How to add a HW wallet as owner for pool pledge.
 
 Make sure you can see your HW wallet on your air-gapped offline machine.
 
@@ -10,16 +10,16 @@ Make sure you can see your HW wallet on your air-gapped offline machine.
 {% tab title=" Air-gapped offline machine" %}
 ```bash
 lusb
-# Needs Ledger Cardano-App version 2.1.0+
-# If not then visit :
-# Ledger: https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
+# LEDGER Cardano-App version 2.1.0+ is needed.
+# If you cant see your ledger wallet then visit :
+# https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
 # Linux tab at the bottom.
 #
-# Trezor Model-T: 
+# TREZOR Model-T: 
 # https://wiki.trezor.io/Udev_rules
 # You must install the Trezor Bridge.
 #
-# OR see "StakePoolOperator Scripts" for clear indications if you are unsure:
+# OR see "StakePoolOperator Scripts" for clear indications on compatibility if you are unsure:
 # https://github.com/gitmachtl/scripts/tree/master/cardano/mainnet#how-to-prepare-your-system-before-using-a-hardware-wallet
 ```
 {% endtab %}
@@ -68,6 +68,8 @@ Create stake-pool registration certificate including HW wallet as second owner a
 Edit this to your own settings!
 {% endhint %}
 
+{% tabs %}
+{% tab title="Air-gapped offline machine" %}
 ```text
 cardano-cli stake-pool registration-certificate \
     --cold-verification-key-file node.vkey \
@@ -85,10 +87,12 @@ cardano-cli stake-pool registration-certificate \
     --metadata-hash $(cat poolMetaDataHash.txt) \
     --out-file pool.cert
 ```
+{% endtab %}
+{% endtabs %}
 
-Copy pool.cert to Block Producer.
+Copy pool.cert to your Block Producer.
 
-Find current tip.
+Find the current tip.
 
 {% tabs %}
 {% tab title="Block Producer" %}
@@ -148,7 +152,7 @@ cardano-cli transaction build-raw \
 {% endtab %}
 {% endtabs %}
 
-Calculate transaction fee
+Calculate transaction fee.
 
 {% tabs %}
 {% tab title="Block Producer" %}
@@ -166,7 +170,7 @@ echo fee: $fee
 {% endtab %}
 {% endtabs %}
 
-Calculate final txOut
+Calculate final txOut.
 
 {% tabs %}
 {% tab title="Block Producer" %}
@@ -179,6 +183,8 @@ echo txOut: ${txOut}
 
 Build raw transaction that includes the fee.
 
+{% tabs %}
+{% tab title="Block Producer" %}
 ```text
 cardano-cli transaction build-raw \
     ${tx_in} \
@@ -189,8 +195,10 @@ cardano-cli transaction build-raw \
     --allegra-era \
     --out-file tx.raw
 ```
+{% endtab %}
+{% endtabs %}
 
-Copy tx.raw to air-gapped machine for signing.
+Copy tx.raw to your air-gapped machine for signing.
 
 Create transaction witnesses from all used CLI signing-keys.
 
@@ -204,17 +212,21 @@ cardano-cli transaction witness --tx-body-file tx.raw --signing-key-file payment
 {% endtab %}
 {% endtabs %}
 
-Create transaction witness from HW wallet signing key.\(connect your ledger and open Cardano app\)
+Create transaction witness from HW wallet signing key. \(connect your HW wallet and open Cardano app\)
 
 {% hint style="info" %}
-Make sure your ledger is detected or its gonna say `"`Transport not available `"`
+Make sure your HW wallet is detected or it will say: `"`Transport not available `"`
 {% endhint %}
 
+{% tabs %}
+{% tab title="Air-gapped offline machine" %}
 ```text
 cardano-hw-cli transaction witness --tx-body-file tx.raw --hw-signing-file hw-stake.hwsfile --mainnet --out-file hw-stake.witness
 ```
+{% endtab %}
+{% endtabs %}
 
-Assemble final transaction with all witnesses.
+Assemble final transaction with all the witnesses.
 
 {% tabs %}
 {% tab title="Air-gapped offline machine" %}
@@ -237,6 +249,6 @@ cardano-cli transaction submit --tx-file tx-pool.multisign --mainnet
 {% endtabs %}
 
 {% hint style="info" %}
-🔥 **Critical : Do not move your funds from CLI pledge wallet before HW wallet delegation is active on your pool!!\(**_**after 2 snapshots\)**_  **If you move them before your pledge wont be met!**
+🔥 **Critical : Do not move your funds from CLI pledge wallet before HW wallet delegation is active on your pool!!\(**_**after 2 snapshots\)**_  **If you move them before, your pledge will show as "pledge not met".**
 {% endhint %}
 
